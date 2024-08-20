@@ -29,8 +29,8 @@ export default function App() {
       <ContactForm />
       <SearchBox />
       {loading && <Loader />}
-      <ContactList />
       {error && <Error errorMessage={error} />}
+      <ContactList />
     </div>
   );
 }

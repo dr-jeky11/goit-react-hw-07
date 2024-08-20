@@ -1,36 +1,34 @@
-import ContactForm from "../ContactForm/ContactForm";
-import SearchBox from "../SearchBox/SearchBox";
-import ContactList from "../ContactList/ContactList";
-import Error from "../Error/Error";
+import { FaUserLarge, FaPhone } from "react-icons/fa6";
 
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import s from "./Contact.module.css";
 
-import { fetchContacts } from "../../redux/contactsOps";
-import { selectError, selectLoading } from "../../redux/contactsSlice";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contactsOps";
 
-import Loader from "../Loader/Loader";
-
-import s from "./App.module.css";
-
-export default function App() {
-  const error = useSelector(selectError);
-  const loading = useSelector(selectLoading);
-
+export default function Contact({ contactInfo: { name, number, id } }) {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+  const onDelete = () => {
+    dispatch(deleteContact(id));
+  };
 
   return (
     <div className={s.container}>
-      <h1 className={s.title}>Phonebook</h1>
-      <ContactForm />
-      <SearchBox />
-      {loading && <Loader />}
-      <ContactList />
-      {error && <Error errorMessage={error} />}
+      <div>
+        <div className={s.contactsInfo}>
+          <FaUserLarge size={24} />
+          <p className={s.name}>{name}</p>
+        </div>
+
+        <div className={s.contactsInfo}>
+          <FaPhone size={24} />
+          <p className={s.number}>{number}</p>
+        </div>
+      </div>
+
+      <button type="button" className={s.button} onClick={onDelete}>
+        Delete
+      </button>
     </div>
   );
 }

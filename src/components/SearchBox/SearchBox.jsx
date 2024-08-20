@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { changeFilter, selectNameFilter } from "../../redux/filterSlice";
+import { changeFilter, selectNameFilter } from "../../redux/filtersSlice";
 
 import { useId } from "react";
 
