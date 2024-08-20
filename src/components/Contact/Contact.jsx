@@ -1,34 +1,36 @@
-import { FaUserLarge, FaPhone } from "react-icons/fa6";
+import ContactForm from "../ContactForm/ContactForm";
+import SearchBox from "../SearchBox/SearchBox";
+import ContactList from "../ContactList/ContactList";
+import Error from "../Error/Error";
 
-import s from "./Contact.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 
-import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsOps";
+import { fetchContacts } from "../../redux/contactsOps";
+import { selectError, selectLoading } from "../../redux/contactsSlice";
 
-export default function Contact({ contactInfo: { name, number, id } }) {
+import Loader from "../Loader/Loader";
+
+import s from "./App.module.css";
+
+export default function App() {
+  const error = useSelector(selectError);
+  const loading = useSelector(selectLoading);
+
   const dispatch = useDispatch();
 
-  const onDelete = () => {
-    dispatch(deleteContact(id));
-  };
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div className={s.container}>
-      <div>
-        <div className={s.contactsInfo}>
-          <FaUserLarge size={24} />
-          <p className={s.name}>{name}</p>
-        </div>
-
-        <div className={s.contactsInfo}>
-          <FaPhone size={24} />
-          <p className={s.number}>{number}</p>
-        </div>
-      </div>
-
-      <button type="button" className={s.button} onClick={onDelete}>
-        Delete
-      </button>
+      <h1 className={s.title}>Phonebook</h1>
+      <ContactForm />
+      <SearchBox />
+      {loading && <Loader />}
+      <ContactList />
+      {error && <Error errorMessage={error} />}
     </div>
   );
 }

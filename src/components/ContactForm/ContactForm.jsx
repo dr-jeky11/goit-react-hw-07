@@ -1,11 +1,12 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import s from "./ContactForm.module.css";
-
 import { useId } from "react";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+
+import { addContact } from "../../redux/contactsOps";
+
+import css from "./ContactForm.module.css";
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -44,20 +45,20 @@ export default function ContactForm() {
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={FeedbackSchema}>
-      <Form noValidate className={s.container}>
-        <div className={s.inputGroup}>
+      <Form noValidate className={css.container}>
+        <div className={css.inputGroup}>
           <label htmlFor={nameId}>Name</label>
-          <Field className={s.input} id={nameId} name="name" />
-          <ErrorMessage name="name" component="span" className={s.error} />
+          <Field className={css.input} id={nameId} name="name" />
+          <ErrorMessage name="name" component="span" className={css.error} />
         </div>
 
-        <div className={s.inputGroup}>
+        <div className={css.inputGroup}>
           <label htmlFor={numberId}>Number</label>
-          <Field className={s.input} id={numberId} name="number" />
-          <ErrorMessage name="number" component="span" className={s.error} />
+          <Field className={css.input} id={numberId} name="number" />
+          <ErrorMessage name="number" component="span" className={css.error} />
         </div>
 
-        <button type="submit" className={s.button}>
+        <button type="submit" className={css.button}>
           Add contact
         </button>
       </Form>
